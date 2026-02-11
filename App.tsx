@@ -90,6 +90,24 @@ export default function App() {
 
         <main className="flex-1 lg:ml-0">
           <div className="p-6 lg:p-8 max-w-[1400px] mx-auto">
+            {/* Hero */}
+            <div className="hero mb-6">
+              <div className="flex items-center justify-between flex-col md:flex-row gap-4">
+                <div>
+                  <h1 className="text-4xl md:text-5xl font-extrabold text-foreground">College Events — Discover & Register</h1>
+                  <p className="mt-2 text-muted">Explore upcoming events, register quickly, and earn certificates.</p>
+                  <div className="mt-4 flex gap-3">
+                    <button onClick={() => setActiveTab('events')} className="cta-btn px-4 py-2 rounded-md">Browse Events</button>
+                    <button onClick={() => { setActiveTab('my-registrations'); setUserRole('student'); }} className="px-4 py-2 rounded-md border border-gray-200 bg-white">My Registrations</button>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm muted">Next event:</p>
+                  <p className="font-semibold">Tech Symposium 2026 — 15 Mar 2026</p>
+                </div>
+              </div>
+            </div>
+
             {/* Role Switcher - Demo only */}
             <div className="mb-6 flex justify-end">
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-1 inline-flex gap-1">

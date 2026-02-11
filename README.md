@@ -197,6 +197,16 @@ http://10.192.155.133:5173
 ```bash
 vercel
 ```
+After you push changes to the `main` branch Vercel will automatically trigger a new deployment. To force a redeploy from your machine you can run (after installing the Vercel CLI and authenticating):
+
+```bash
+# install vercel CLI (if needed)
+npx vercel login
+# trigger a redeploy (in your project folder)
+npx vercel --prod --confirm
+```
+
+You can also open your Vercel dashboard and click the latest deployment → Redeploy.
 
 ### Option 4: Docker
 ```bash

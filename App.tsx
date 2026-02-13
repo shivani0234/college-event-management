@@ -12,31 +12,37 @@ import { Event, Registration, UserRole } from './types';
 import { toast, Toaster } from 'sonner';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [userRole, setUserRole] = useState<UserRole>('student');
-  const [events, setEvents] = useState<Event[]>(mockEvents);
-  const [registrations, setRegistrations] = useState<Registration[]>(mockRegistrations);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+ const BACKEND_URL = import.meta.env.VITE_API_URL || "https://backend-869254969221.asia-south1.run.app";
 
-  const handleViewEventDetails = (event: Event) => {
-    setSelectedEvent(event);
-  };
+const [file, setFile] = useState<File | null>(null);
+const [uploadedUrl, setUploadedUrl] = useState<string>("");
+const [uploading, setUploading] = useState(false);
 
-  const handleRegister = (formData: any) => {
-    if (!selectedEvent) return;
+const uploadFileToBackend = async () => {
+  if (!file) return toast.error("Please select a file first");
 
-    const newRegistration: Registration = {
-      id: `r${Date.now()}`,
-      eventId: selectedEvent.id,
-      studentName: formData.studentName,
-      studentId: formData.studentId,
-      email: formData.email,
-      phone: formData.phone,
-      department: formData.department,
-      year: formData.year,
-      registeredAt: new Date().toISOString()
-    };
+  setUploading(true);
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    setUploadedUrl(data.url);
+    toast.success("File uploaded successfully!");
+  } catch (err) {
+    console.error(err);
+    toast.error("File upload failed!");
+  } finally {
+    setUploading(false);
+  }
+};
+
+  
 
     setRegistrations([...registrations, newRegistration]);
     
